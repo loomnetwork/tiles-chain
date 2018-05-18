@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es2015", "dom"],
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "outDir": "dist"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

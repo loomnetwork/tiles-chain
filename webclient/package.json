@@ -1,0 +1,33 @@
+{
+  "name": "tiles-chain",
+  "version": "1.0.0",
+  "description": "A distributed tile canvas for all",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "webpack-dev-server -d --inline --progress --no-info --host 0.0.0.0 --port 9000",
+    "build": "rimraf ./dist && webpack -p",
+    "proto": "cd src && protoc --plugin=\"protoc-gen-ts=../node_modules/.bin/protoc-gen-ts\" --js_out=\"import_style=commonjs,binary:.\" --ts_out=\".\" ./proto/dots.proto",
+    "proto:win": "cd src && protoc --plugin=\"protoc-gen-ts=..\\node_modules\\.bin\\protoc-gen-ts.cmd\" --js_out=\"import_style=commonjs,binary:.\" --ts_out=\".\" ./proto/dots.proto"
+  },
+  "author": "Loom Network",
+  "license": "MIT",
+  "devDependencies": {
+    "canvasinput": "^1.2.7",
+    "copy-webpack-plugin": "^3.0.1",
+    "expose-loader": "^0.7.4",
+    "html-webpack-plugin": "^2.30.1",
+    "loom-js": "^1.1.1",
+    "phaser": "^2.6.2",
+    "phaser-ce": "^2.10.0",
+    "rimraf": "^2.6.2",
+    "ts-loader": "^0.8.2",
+    "typescript": "^2.7.2",
+    "webfontloader": "^1.6.28",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^1.16.5"
+  },
+  "dependencies": {
+    "google-protobuf": "^3.5.0",
+    "ts-protoc-gen": "^0.6.0"
+  }
+}

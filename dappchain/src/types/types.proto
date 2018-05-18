@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message CreateDotTx {
+  uint32 x = 1;
+  uint32 y = 2;
+  uint32 r = 3;
+  uint32 g = 4;
+  uint32 b = 5;
+}
+
+message DotState {
+	string owner = 1;
+	string uuid  = 2;
+  uint32 x     = 3;
+  uint32 y     = 4;
+  uint32 r     = 5;
+  uint32 g     = 6;
+  uint32 b     = 7;
+}
