@@ -7,8 +7,13 @@ import { CreateDotTx } from './proto/dots_pb'
 
 export default class ContractClient {
   private contract: Contract
+  public callerAddress: any
 
   constructor() {
+    this.createContract()
+  }
+
+  async createContract() {
     const privateKey = CryptoUtils.generatePrivateKey()
     const publicKey = CryptoUtils.publicKeyFromPrivateKey(privateKey)
 
@@ -22,15 +27,13 @@ export default class ContractClient {
       new NonceTxMiddleware(publicKey, client),
       new SignedTxMiddleware(privateKey)
     ]
-    // address of the `helloworld` smart contract on the Loom DAppChain
-    const contractAddr = new Address(
-      client.chainId,
-      LocalAddress.fromHexString('0x005B17864f3adbF53b1384F2E6f2120c6652F779')
-    )
-    const callerAddr = new Address(client.chainId, LocalAddress.fromPublicKey(publicKey))
+    // address of the `BluePrint` smart contract on the Loom DAppChain
+    const contractAddr = await client.getContractAddressAsync('BluePrint')
+
+    this.callerAddress = new Address(client.chainId, LocalAddress.fromPublicKey(publicKey))
     this.contract = new Contract({
       contractAddr,
-      callerAddr,
+      callerAddr: this.callerAddress,
       client
     })
   }

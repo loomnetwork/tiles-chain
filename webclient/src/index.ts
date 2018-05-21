@@ -6,6 +6,7 @@ import 'p2'
 import * as Phaser from 'phaser'
 import Config from './config'
 import ContractClient from './contract_client'
+import Events from './events'
 
 interface UserColor {
   r: number
@@ -19,6 +20,7 @@ class SimpleGame {
   protected cursors: Phaser.CursorKeys
   protected userColor: UserColor
   protected contractClient: ContractClient
+  protected events: Events
 
   constructor() {
     this.game = new Phaser.Game(Config.width, Config.height, Phaser.AUTO, "content", this)
@@ -26,6 +28,7 @@ class SimpleGame {
 
   preload() {
     this.contractClient = new ContractClient()
+    this.events = new Events()
   }
 
   create() {
@@ -40,6 +43,9 @@ class SimpleGame {
         bmp.fill(this.userColor.r, this.userColor.g, this.userColor.b)
         const box = this.game.add.sprite(mouseEv.x , mouseEv.y, bmp)
         box.anchor.set(1.5, 1.5)
+      }).then(() => {
+        console.log(this.contractClient.callerAddress)
+        // this.contractClient.getDot()
       })
   }
 }

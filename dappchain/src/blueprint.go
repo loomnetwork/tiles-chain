@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
 	"types"
 
 	"github.com/loomnetwork/go-loom/plugin"
@@ -27,6 +29,17 @@ func (e *BluePrint) Init(ctx contract.Context, req *plugin.Request) error {
 	return nil
 }
 
+func (e *BluePrint) GetDotTx(ctx contract.StaticContext, accTx *types.DotState) (*types.DotState, error) {
+	if ctx.Has([]byte(accTx.Owner)) {
+		var curState types.DotState
+		if err := ctx.Get([]byte(accTx.Owner), &curState); err != nil {
+			return nil, err
+		}
+		return &curState, nil
+	}
+	return nil, nil
+}
+
 func (e *BluePrint) CreateDotTx(ctx contract.Context, accTx *types.CreateDotTx) error {
 	owner := ctx.Message().Sender.Local.Hex()
 
@@ -48,6 +61,24 @@ func (e *BluePrint) CreateDotTx(ctx contract.Context, accTx *types.CreateDotTx) 
 	if err := ctx.Set([]byte(dotUUID), state); err != nil {
 		return errors.Wrap(err, "Error setting state")
 	}
+
+	emitMsg := struct {
+		Owner string
+		Uuid  string
+		X     uint32
+		Y     uint32
+		R     uint32
+		G     uint32
+		B     uint32
+	}{owner, dotUUID, accTx.X, accTx.Y, accTx.R, accTx.G, accTx.B}
+
+	emitMsgJSON, err := json.Marshal(emitMsg)
+
+	if err != nil {
+		log.Println("Error marshalling emit message")
+	}
+
+	ctx.Emit(emitMsgJSON)
 
 	return nil
 }
