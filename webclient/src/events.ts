@@ -13,7 +13,7 @@ export default class Events {
         method: 'subevents',
         jsonrpc: '2.0',
         params: [],
-        id: 0
+        id: 'events'
       }))
 
       // on new event
