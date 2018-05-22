@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-message CreateDotTx {
-  uint32 x = 1;
-  uint32 y = 2;
-  uint32 r = 3;
-  uint32 g = 4;
-  uint32 b = 5;
+message TileMapTx {
+  string data = 1;
+}
+
+message TileMapState {
+  string data = 1;
 }

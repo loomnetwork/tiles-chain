@@ -1,21 +1,21 @@
-PKG = github.com/loomnetwork/weave-blueprint
+PKG = github.com/loomnetwork/tile-chain/dappchain
 PROTOC = protoc --plugin=./protoc-gen-gogo -Isrc -I/usr/local/include
 
 .PHONY: all clean test lint deps proto
 
-all: contracts 
+all: contracts
 
-contracts: build/contracts/blueprint.0.0.1
+contracts: build/contracts/tile-chain.0.0.1
 
-build/contracts/blueprint.0.0.1: proto
+build/contracts/tile-chain.0.0.1: proto
 	mkdir -p build/contracts
-	go build -o $@ src/blueprint.go
+	go build -o $@ src/tile-chain.go
 
 protoc-gen-gogo:
 	go build github.com/gogo/protobuf/protoc-gen-gogo
 
 cli:
-	go build -o build/blueprint src/cli/main.go
+	go build -o build/tile-chain src/cli/main.go
 
 %.pb.go: %.proto protoc-gen-gogo
 	$(PROTOC) --gogo_out=src $<
@@ -44,6 +44,5 @@ clean:
 	go clean
 	rm -f \
 		protoc-gen-gogo \
-		src/types/types.pb.go \
-		testdata/test.pb.go \
+		src/types/types.pb.go
 

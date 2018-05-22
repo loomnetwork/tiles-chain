@@ -3,8 +3,8 @@
         {
             "vm": "plugin",
             "format": "plugin",
-            "name": "BluePrint",
-            "location": "blueprint:0.0.1",
+            "name": "TileChain",
+            "location": "tile-chain:0.0.1",
             "init": {
 
             }
