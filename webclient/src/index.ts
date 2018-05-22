@@ -41,8 +41,6 @@ const colors:Color[] = [
 
 class SimpleGame {
   protected game: Phaser.Game
-  protected logo: Phaser.Sprite
-  protected cursors: Phaser.CursorKeys
   protected userColor: Color
   protected contractClient: ContractClient
   protected events: Events
@@ -55,12 +53,36 @@ class SimpleGame {
   }
 
   create() {
+    // get an random color for the user
     this.userColor = colors[this.game.rnd.integerInRange(0, 5)]
+
+    // initialize map
     this.tileMap = {tiles: []}
-    this.game.input.mouse.onMouseDown = this.onMouseDown.bind(this)
-    this.updateTilesOnCanvas()
+
+    // listen for mouse event
+    this.game.input.mouse.onMouseDown = mouseEvent => this.onMouseDown(mouseEvent)
+
+    // subscribe for tile map updates from websocket
+    this.events.onEvent = tileData => this.drawTiles(tileData)
+
+    // request state update
+    this.requestUpdateTilesOnCanvas()
   }
 
+  onMouseDown(mouseEv: MouseEvent) {
+    this.setTileMap(mouseEv.x, mouseEv.y)
+    this.drawTile(mouseEv.x , mouseEv.y, this.userColor.r, this.userColor.g, this.userColor.b)
+  }
+
+  // draw tiles from JSON
+  drawTiles(tileData: any) {
+    this.tileMap = JSON.parse(tileData)
+    this.tileMap.tiles.forEach((tile: Tile) => {
+      this.drawTile(tile.point.x, tile.point.y, tile.color.r, tile.color.g, tile.color.b)
+    })
+  }
+
+  // Draw a single tile
   drawTile(x: number, y: number, r: number, g: number, b: number) {
     const bmp = this.game.add.bitmapData(10, 10)
     bmp.fill(r, g, b)
@@ -68,18 +90,17 @@ class SimpleGame {
     box.anchor.set(1.5, 1.5)
   }
 
-  async updateTilesOnCanvas() {
+  // Used when request an update without web sockets
+  async requestUpdateTilesOnCanvas() {
     const tileMapState = await this.contractClient.getTileMapState()
     const tileData = tileMapState.getData()
 
     if (tileData) {
-      this.tileMap = JSON.parse(tileData)
-      this.tileMap.tiles.forEach((tile: Tile) => {
-        this.drawTile(tile.point.x, tile.point.y, tile.color.r, tile.color.g, tile.color.b)
-      })
+      this.drawTiles(tileData)
     }
   }
 
+  // push new tile to tile map state
   async setTileMap(x: number, y: number) {
     this.tileMap.tiles.push({
       point: {
@@ -93,13 +114,8 @@ class SimpleGame {
       }
     })
 
+    // send the transaction
     await this.contractClient.setTileMapState(JSON.stringify(this.tileMap))
-  }
-
-  async onMouseDown(mouseEv: MouseEvent) {
-    this.updateTilesOnCanvas()
-    this.setTileMap(mouseEv.x, mouseEv.y)
-    this.drawTile(mouseEv.x , mouseEv.y, this.userColor.r, this.userColor.g, this.userColor.b)
   }
 }
 

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
 	"types"
 
 	"github.com/loomnetwork/go-loom/plugin"
@@ -42,6 +44,19 @@ func (e *TileChain) SetTileMapState(ctx contract.Context, tileMapTx *types.TileM
 	if err := ctx.Set([]byte("TileMapState"), state); err != nil {
 		return errors.Wrap(err, "Error setting state")
 	}
+
+	emitMsg := struct {
+		Data   string
+		Method string
+	}{tileMapTx.GetData(), "onTileMapStateUpdate"}
+
+	emitMsgJSON, err := json.Marshal(emitMsg)
+
+	if err != nil {
+		log.Println("Error marshalling emit message")
+	}
+
+	ctx.Emit(emitMsgJSON)
 
 	return nil
 }
