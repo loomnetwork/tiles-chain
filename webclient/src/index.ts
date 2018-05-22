@@ -69,9 +69,13 @@ class SimpleGame {
     this.requestUpdateTilesOnCanvas()
   }
 
-  onMouseDown(mouseEv: MouseEvent) {
-    this.setTileMap(mouseEv.x, mouseEv.y)
-    this.drawTile(mouseEv.x , mouseEv.y, this.userColor.r, this.userColor.g, this.userColor.b)
+  async onMouseDown(mouseEv: MouseEvent) {
+    try {
+      await this.setTileMap(mouseEv.x, mouseEv.y)
+      this.drawTile(mouseEv.x , mouseEv.y, this.userColor.r, this.userColor.g, this.userColor.b)
+    } catch (err) {
+      console.error('something wrong', err)
+    }
   }
 
   // draw tiles from JSON
