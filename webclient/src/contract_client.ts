@@ -9,9 +9,7 @@ export default class ContractClient {
   private contract: Contract
   public callerAddress: any
 
-  constructor() {
-    this.createContract()
-  }
+  constructor() {}
 
   async createContract() {
     const privateKey = CryptoUtils.generatePrivateKey()

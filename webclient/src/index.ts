@@ -52,7 +52,9 @@ class SimpleGame {
     this.events = new Events()
   }
 
-  create() {
+  async create() {
+    await this.contractClient.createContract()
+
     // get an random color for the user
     this.userColor = colors[this.game.rnd.integerInRange(0, 5)]
 
