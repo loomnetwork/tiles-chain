@@ -2,6 +2,10 @@
 
 set -euxo pipefail
 
+# Create dummy Makefile to avoid automatic dependency install
+# https://docs.travis-ci.com/user/languages/go/#Default-Build-Script
+touch Makefile
+
 PROTOBUF_VERSION=3.5.1
 
 cd /tmp
@@ -17,7 +21,3 @@ sudo mv protoc3/bin/* /usr/local/bin/
 
 # Move protoc3/include to /usr/local/include/
 sudo mv protoc3/include/* /usr/local/include/
-
-# Create dummy Makefile to avoid automatic dependency install
-# https://docs.travis-ci.com/user/languages/go/#Default-Build-Script
-touch Makefile
