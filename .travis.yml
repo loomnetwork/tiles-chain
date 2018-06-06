@@ -1,0 +1,6 @@
+language: go
+sudo: required
+script:
+- "./.travis.sh"
+go:
+- 1.10.x
