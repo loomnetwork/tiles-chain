@@ -1,0 +1,8 @@
+language: go
+sudo: required
+before_install:
+- "./.travis_before_install.sh"
+script:
+- "./.travis.sh"
+go:
+- 1.10.x
