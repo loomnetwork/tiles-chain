@@ -1,4 +1,4 @@
-# Tiles Chain
+# Tiles Chain [![Build Status](https://travis-ci.org/loomnetwork/tiles-chain.svg?branch=master)](https://travis-ci.org/loomnetwork/tiles-chain)
 
 A basic example showcasing a simple HTML5 + WebSockets interacting with a Loom DappChain, using [Phaser](http://phaser.io) and [Loom.js](https://github.com/loomnetwork/loom-js).
 
