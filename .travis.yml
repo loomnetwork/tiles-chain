@@ -1,5 +1,7 @@
 language: go
 sudo: required
+before_install:
+- touch Makefile
 script:
 - "./.travis.sh"
 go:
