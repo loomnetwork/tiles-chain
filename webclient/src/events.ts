@@ -22,6 +22,7 @@ export default class Events {
   }
 
   onMessage(event) {
+    console.log('event', event)
     const data = JSON.parse(event.data)
     const encodedData = data.result.encodedData
 

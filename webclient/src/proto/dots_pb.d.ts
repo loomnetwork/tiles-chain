@@ -43,3 +43,23 @@ export namespace TileMapState {
   }
 }
 
+export class TileMapStateUpdate extends jspb.Message {
+  getData(): string;
+  setData(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): TileMapStateUpdate.AsObject;
+  static toObject(includeInstance: boolean, msg: TileMapStateUpdate): TileMapStateUpdate.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: TileMapStateUpdate, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): TileMapStateUpdate;
+  static deserializeBinaryFromReader(message: TileMapStateUpdate, reader: jspb.BinaryReader): TileMapStateUpdate;
+}
+
+export namespace TileMapStateUpdate {
+  export type AsObject = {
+    data: string,
+  }
+}
+

@@ -1,10 +1,9 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
 	"types"
 
+	"github.com/gogo/protobuf/proto"
 	"github.com/loomnetwork/go-loom/plugin"
 	contract "github.com/loomnetwork/go-loom/plugin/contractpb"
 	"github.com/pkg/errors"
@@ -45,18 +44,15 @@ func (e *TileChain) SetTileMapState(ctx contract.Context, tileMapTx *types.TileM
 		return errors.Wrap(err, "Error setting state")
 	}
 
-	emitMsg := struct {
-		Data   string
-		Method string
-	}{tileMapTx.GetData(), "onTileMapStateUpdate"}
-
-	emitMsgJSON, err := json.Marshal(emitMsg)
+	payload, err := proto.Marshal(&types.TileMapStateUpdate{
+		Data: tileMapTx.GetData(),
+	})
 
 	if err != nil {
-		log.Println("Error marshalling emit message")
+		return err
 	}
 
-	ctx.Emit(emitMsgJSON)
+	ctx.Emit(payload)
 
 	return nil
 }

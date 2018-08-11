@@ -3,7 +3,7 @@ PROTOC = protoc --plugin=./protoc-gen-gogo -Isrc -I/usr/local/include
 
 .PHONY: all clean test lint deps proto
 
-all: contracts
+all: contracts proto
 
 contracts: build/contracts/tile-chain.0.0.1
 
