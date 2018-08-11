@@ -52,7 +52,7 @@ func (e *TileChain) SetTileMapState(ctx contract.Context, tileMapTx *types.TileM
 		return err
 	}
 
-	ctx.Emit(payload)
+	ctx.EmitTopics(payload, "event:OnTileMapStateUpdate")
 
 	return nil
 }

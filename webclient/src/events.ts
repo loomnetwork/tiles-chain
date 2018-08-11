@@ -22,17 +22,13 @@ export default class Events {
   }
 
   onMessage(event) {
-    console.log('event', event)
     const data = JSON.parse(event.data)
-    const encodedData = data.result.encodedData
 
     // there's an useful encoded that
-    if (encodedData) {
-      const dAppEvent = JSON.parse(atob(encodedData))
-
+    if (data) {
       // tile map state updated
-      if (this.onEvent && dAppEvent.Method == 'onTileMapStateUpdate') {
-        this.onEvent(dAppEvent.Data)
+      if (this.onEvent) {
+        this.onEvent(data)
       }
     }
   }
