@@ -3,3 +3,5 @@ webclient/dist
 dappchain/build
 dappchain/chaindata
 dappchain/app.db
+loom
+tmpgopath
