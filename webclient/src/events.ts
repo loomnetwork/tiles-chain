@@ -31,8 +31,7 @@ export default class Events {
 
       // tile map state updated
       if (this.onEvent && dAppEvent.Method == 'onTileMapStateUpdate') {
-        const parsedData = JSON.parse(dAppEvent.Data)
-        this.onEvent(parsedData)
+        this.onEvent(dAppEvent.Data)
       }
     }
   }

@@ -30,8 +30,9 @@ func (e *TileChain) Init(ctx contract.Context, req *plugin.Request) error {
 
 func (e *TileChain) GetTileMapState(ctx contract.StaticContext, _ *types.TileMapTx) (*types.TileMapState, error) {
 	var curState types.TileMapState
-	if err := ctx.Get([]byte("TileMapState"), &curState); err != nil {
-		return &curState, nil
+	err := ctx.Get([]byte("TileMapState"), &curState)
+	if err != nil && err != contract.ErrNotFound {
+		return nil, err
 	}
 	return &curState, nil
 }

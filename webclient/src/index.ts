@@ -7,8 +7,6 @@ import * as Phaser from 'phaser'
 import Config from './config'
 import ContractClient from './contract_client'
 import Events from './events'
-import { CryptoUtils } from 'loom-js'
-import config from './config';
 
 interface Color {
   r: number
@@ -98,8 +96,15 @@ class SimpleGame {
 
   // Used when request an update without web sockets
   async requestUpdateTilesOnCanvas() {
-    const tileMapState = await this.contractClient.getTileMapState()
-    const tileData = tileMapState.getData()
+    let tileData
+
+    try {
+      const tileMapState = await this.contractClient.getTileMapState()
+      tileData = tileMapState.getData()
+    } catch(err) {
+      console.error(err.message)
+      console.error(err.stack)
+    }
 
     if (tileData) {
       this.drawTiles(tileData)
