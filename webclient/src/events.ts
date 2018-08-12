@@ -12,7 +12,7 @@ export default class Events {
       this.ws.send(JSON.stringify({
         method: 'subevents',
         jsonrpc: '2.0',
-        params: [],
+        params: {},
         id: 'events'
       }))
 
@@ -23,7 +23,7 @@ export default class Events {
 
   onMessage(event) {
     const data = JSON.parse(event.data)
-    const encodedData = data.result.encodedData
+    const encodedData = data.result.encoded_body
 
     // there's an useful encoded that
     if (encodedData) {
@@ -31,7 +31,8 @@ export default class Events {
 
       // tile map state updated
       if (this.onEvent && dAppEvent.Method == 'onTileMapStateUpdate') {
-        this.onEvent(dAppEvent.Data)
+        const parsedData = JSON.parse(dAppEvent.Data)
+        this.onEvent(parsedData)
       }
     }
   }
