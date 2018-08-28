@@ -17,8 +17,8 @@ export default class ContractClient {
 
     const client = new Client(
       'default',
-      'ws://127.0.0.1:46657/websocket',
-      'ws://127.0.0.1:9999/queryws'
+      'ws://127.0.0.1:46658/websocket',
+      'ws://127.0.0.1:46658/queryws'
     )
     // required middleware
     client.txMiddleware = [
