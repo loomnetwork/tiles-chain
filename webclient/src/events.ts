@@ -4,7 +4,7 @@ export default class Events {
 
   constructor() {
     // open new websocket connection
-    this.ws = new WebSocket('ws://127.0.0.1:9999/queryws')
+    this.ws = new WebSocket('ws://127.0.0.1:46658/queryws')
 
     this.ws.onopen = () => {
 
